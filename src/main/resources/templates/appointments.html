@@ -1,0 +1,19 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<table>
+    <tr>
+        <th><p th:text="#{appointments.dentistName}">appointments.dentistName</p></th>
+        <th><p th:text="#{appointments.appointment}">appointments.appointment</p></th>
+    </tr >
+    <tr th:each="a : ${appointments}">
+        <td><p th:text="${a.getDentistName()}"></p></td>
+        <td><a th:href="@{'/appointments/' + ${a.getId()} }" th:text="${a.getVisitTime()}"></a></td>
+    </tr>
+</table>
+
+<div>
+    <a th:href="@{/}" th:text="#{menu.back}">menu.back</a>
+</div>
+</body>
+</html>

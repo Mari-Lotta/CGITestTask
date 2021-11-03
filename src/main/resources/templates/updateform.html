@@ -1,0 +1,53 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div>
+    <table>
+        <tr>
+            <th th:text="#{edit.header}"></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th><p th:text="#{appointments.dentistName}">appointments.dentistName :</p></th>
+            <td><p th:text="${appointment.getDentistName()}"></p></td>
+        </tr>
+        <tr>
+            <th><p th:text="#{appointments.appointment}">appointments.appointment :</p></th>
+            <td><p  th:text="${appointment.getVisitTime()}"></p></td>
+        </tr>
+    </table>
+</div>
+
+
+<form action="#" th:action="@{'/appointments/update/' + ${appointment.getId()} }" th:object="${dentistVisitDTO}" method="post">
+    <table>
+        <tr>
+            <td><p th:text="#{dentist.name}">dentist.name</p></td>
+            <td><select th:field="*{dentistName}">
+                <option th:each="i : ${dentists}" th:value="${i.getDentistName()}" th:selected="${i.getDentistName() == appointment.getDentistName()}" th:text="${i.getDentistName()}">
+                </option>
+            </select>
+            </td>
+            <td th:if="${#fields.hasErrors('dentistName')}" th:errors="*{dentistName}">name.error</td>
+        </tr>
+        <tr>
+            <td><p th:text="#{visit.date}">visit.date</p></td>
+            <td><input type="date" th:field="*{visitDate}"  min="2021-11-02" pattern="\d{4}.\d{2}.\d{2}" required="required"/></td>
+            <td th:if="${#fields.hasErrors('visitDate')}" th:errors="*{visitDate}">date.error</td>
+        </tr>
+        <tr>
+            <td><p th:text="#{visit.time}">visit.time</p></td>
+            <td><input type="time" th:field="*{visitTime}"  min="07:00" max="19:00" pattern="[0-9]{2}:[0-9]{2}" required="required"/></td>
+            <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">time.error</td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" th:text="#{update.visit}"></button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<a th:href="@{/appointments}" th:text="#{cancel.update}">cancel.update</a>
+
+</body>
+</html>
